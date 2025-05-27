@@ -1,0 +1,44 @@
+local M = {}
+
+---@type table<string, string>
+local env = {}
+
+local original_getenv = os.getenv
+
+---@type fun(key: string): string|nil
+local function getenv(key)
+    if env[key] then
+        return env[key]
+    end
+
+    return original_getenv(key)
+end
+
+function M.config()
+    local f, err = io.open(".env", "r")
+    if not f then
+        error("Could not open .env file: " .. tostring(err))
+    end
+
+    for line in f:lines() do
+        if not line:match("^%s*#") and
+            not line:match("^%s*;") and
+            not line:match("^%s*$") then
+            local key, value = line:match("^([^=]+)%s*=%s*(.*)$")
+            key = key and key:gsub("^%s+", ""):gsub("%s+$", "")
+
+            if key and value then
+                value = value:gsub('^"(.*)"$', '%1'):gsub("^'(.*)'$", '%1')
+                value = value:gsub("\\n", "\n"):gsub("\\r", "\r"):gsub("\\t", "\t")
+                value = value:gsub("\\\\", "\\")
+                value = value:gsub("\\\"", "\""):gsub("\\\'", "\'")
+                env[key] = value
+            end
+        end
+    end
+
+    f:close()
+    _G.os.getenv = getenv
+end
+
+return M
