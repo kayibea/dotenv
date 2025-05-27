@@ -1,6 +1,6 @@
 rockspec_format = "3.0"
 package = "dotenv"
-version = "dev-1"
+version = "0.0.1-1"
 source = {
     url = "git://github.com/kayibea/dotenv.git"
 }
@@ -27,6 +27,6 @@ dependencies = {
 build = {
     type = "builtin",
     modules = {
-        dotenv = "dotenv.lua"
+        "dotenv.lua"
     }
 }
