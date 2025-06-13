@@ -4,3 +4,4 @@
 /.luarocks
 /.vscode
 *.rock
+/.luarc.json
