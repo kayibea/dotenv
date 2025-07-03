@@ -3,7 +3,7 @@ local M = {}
 ---@type table<string, string>
 local env = {}
 
-local original_getenv = os.getenv
+local original_getenv = _G.os.getenv
 
 ---@param key string
 ---@return string?
