@@ -27,6 +27,6 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    "dotenv.lua"
+    ["dotenv"] = "dotenv.lua"
   }
 }
