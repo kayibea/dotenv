@@ -3,5 +3,5 @@
 /lua_modules
 /.luarocks
 /.vscode
-*.rock
+/*.rock
 /.luarc.json
