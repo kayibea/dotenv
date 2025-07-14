@@ -22,13 +22,11 @@ function M.config()
   end
 
   for line in f:lines() do
-    if not line:match("^%s*#") and
-        not line:match("^%s*;") and
-        not line:match("^%s*$") then
-      local key, value = line:match("^([^=]+)%s*=%s*(.*)$")
+    if not line:match("^%s*[#;]") and not line:match("^%s*$") then
+      local key, value = line:match("^%s*([^=]+)%s*=%s*(.-)%s*$")
 
       if key and value then
-        key = key and key:gsub("^%s+", ""):gsub("%s+$", "")
+        key = key:gsub("^%s+", ""):gsub("%s+$", "")
         value = value:gsub('^"(.*)"$', '%1'):gsub("^'(.*)'$", '%1')
         value = value:gsub("\\n", "\n"):gsub("\\r", "\r"):gsub("\\t", "\t")
         value = value:gsub("\\\\", "\\")
